@@ -5,11 +5,12 @@ import json
 request_url="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=TSCO.LON&outputsize=full&apikey=demo"
 
 response = requests.get(request_url)
+parsed_response = json.loads(response.text)
+
 last_refreshed= parsed_response["Meta Data"]["3. Last Refreshed"]
 
-parsed_response = json.loads(response.text)
-latest_close= parsed_response["Time Series {Daily}"]["2021-03-02"]["4. close"]
-breakpoint()
+latest_close= parsed_response["Time Series (Daily)"]["2021-03-02"]["4. close"]
+#breakpoint()
 #print(type(response))
 #print(response.status_code)
 #print(response.text)
