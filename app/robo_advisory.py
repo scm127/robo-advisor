@@ -9,7 +9,7 @@ load_dotenv()
 def to_usd(my_price):
     return f"${my_price:,.2f}" #> $12,000.71
 
-symbol="TSLA"
+symbol="MSFT"
 api_key=os.environ.get("ALPHAVANTAGE_API_KEY")
 request_url=f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
 
