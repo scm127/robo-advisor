@@ -21,11 +21,13 @@ last_refreshed= parsed_response["Meta Data"]["3. Last Refreshed"]
 
 latest_close= tsd[latest_day]["4. close"] 
 high_prices=[]
-recent_high=max(high_prices)
 
 for date in dates:
-    high_price=tsd[date]["4. close"]
+    high_price=tsd[date]["2. high"]
     high_prices.append(high_price)
+
+recent_high=max(high_prices)
+
 #breakpoint()
 #print(type(response))
 #print(response.status_code)
