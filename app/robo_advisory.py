@@ -3,12 +3,15 @@ import requests
 import json
 import csv
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 #Taken from a previous project
 def to_usd(my_price):
     return f"${my_price:,.2f}" #> $12,000.71
 
-request_url="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=TSCO.LON&outputsize=full&apikey=demo"
+symbol="TSLA"
+api_key=os.environ.get("ALPHAVANTAGE_API_KEY")
+request_url=f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
 
 response = requests.get(request_url)
 parsed_response = json.loads(response.text)
@@ -48,14 +51,15 @@ csv_headers=["timestamp","open","high","low","close","volume"]
 with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader() # uses fieldnames set above
-    
-    writer.writerow({
-        "timestamp": "TODO",
-        "open":"TODO",
-        "high":"TODO",
-        "low":"TODO",
-        "close":"TODO",
-        "volume":"TODO",
+    for date in dates:
+        daily_prices=tsd[date]
+        writer.writerow({
+            "timestamp": date,
+            "open": daily_prices["1. open"],
+            "high":daily_prices["2. high"],
+            "low":daily_prices["3. low"],
+            "close":daily_prices["4. close"],
+            "volume":daily_prices["5. volume"],
         })
 
 print("-------------------------")
